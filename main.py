@@ -34,7 +34,11 @@ def find_page(driver):
         return False
 
 def follow_all(driver):
-    print('here')
+    followers_button = driver.find_element(By.XPATH, value="//a[contains(@href, 'followers')]").click()
+    followers = driver.find_elements(By.XPATH, value="//div[contains(@class, 'x1dm5mii')]")
+    for follower in followers:
+        button = follower.find_element(By.TAG_NAME, value='button').click()
+    print('done')
 
 
 if  __name__ == "__main__":
