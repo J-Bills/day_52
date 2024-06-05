@@ -2,7 +2,7 @@ from config import credential_dict
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import InvalidArgumentException
+from selenium.common.exceptions import NoSuchElementException
 
 
 def main():
@@ -17,28 +17,31 @@ def main():
     submit_button = driver.find_element(By.XPATH,value="//button[contains(@type, 'submit')]").click()
     driver.implicitly_wait(10)
     
-    #have user input page to load
     return driver
     
 def find_page(driver):
     page_name = input("Input the instagram page: \n")
     
-    url = f'https://www.instagram.com/{page_name}/followers'
+    url = f'https://www.instagram.com/{page_name}'
     driver.get(url)
     driver.implicitly_wait(10)
-    # page_name = input("Input the instagram page: \n")
-    # try:
-    #     driver.get(f'https//www.instagram.com/{page_name}')
-    # except InvalidArgumentException:
-    #     print('invalid instagram page\n')
-    #     find_page(driver)
-    pass
+    #check to see if inputted page is real
+    try:
+        driver.find_element(By.XPATH, value='//span[text()="Sorry, this page isn\'t available."]')
+    except NoSuchElementException:
+        return True
+    else:
+        return False
 
 def follow_all(driver):
-    pass
+    print('here')
 
 
 if  __name__ == "__main__":
     browser = main()
-    find_page(browser)
-    follow_all(browser)
+    valid_page = find_page(browser)
+    if  valid_page:
+        follow_all(browser)
+    else:
+        print('enter valid page')
+        find_page(browser)
