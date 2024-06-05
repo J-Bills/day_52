@@ -1,4 +1,5 @@
+"""Instagram Credentials"""
 credential_dict ={
-    'username':'',
-    'password':''
+    'username':'u',
+    'password':'p'
 }
